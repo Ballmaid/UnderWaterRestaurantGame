@@ -4,6 +4,7 @@ import threading
 import time
 
 def loadConfig():
+    global Maxplayers, ServerName, Password
     config = configparser.ConfigParser()
     config.read('config.ini')
     Maxplayers = config['DEFAULT']['MaxPlayers']
@@ -22,8 +23,21 @@ def setupNetwork():
 def listenCommand():
     data, addr = s.recvfrom(1024)
     stringdata = data.decode("utf-8")
-    print("received message: " + stringdata)
+    #stringdata is in format "msgtype,var1,var2,var3..." 
+    #msgtype 
+    #1X is for player
+    #2X is for economy
+    messagelist = stringdata.split(",")
+    messagetype = messagelist[0]
+    match messagetype:
+        case "10":                          #player connected
+            connectPlayer(messagelist[1], addr)
+        
     time.sleep(0.1)
+
+
+def sendCommand(command, addr):
+    s.sendto(command.encode("utf-8"), addr)
 
 def qkill():
     global keep_running
@@ -34,12 +48,16 @@ def qkill():
             s.close()
             print("server is closing")
 
+def connectPlayer(UserName, addr):
+    print("Player " + UserName + " connected")
+    sendCommand("11," + ServerName, addr)
+
+
+
 print("the server is starting")
-#load config.ini
 loadConfig()
 setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
 while keep_running:
     listenCommand()
-    Time.sleep(0.1)
