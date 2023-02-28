@@ -22,11 +22,11 @@ public class CameraMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            CameraTransform.position += new Vector3(-0.05f, 0, 0);
+            CameraTransform.position += new Vector3(-15f*Time.deltaTime, 0, 0);
         }
         if (Input.GetKey(KeyCode.D))
         {
-            CameraTransform.position += new Vector3(0.05f, 0, 0);
+            CameraTransform.position += new Vector3(15f*Time.deltaTime, 0, 0);
         }
     }
 }
