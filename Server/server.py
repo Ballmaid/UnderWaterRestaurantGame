@@ -1,6 +1,7 @@
 import configparser
 import socket
-
+import threading
+import time
 
 def loadConfig():
     config = configparser.ConfigParser()
@@ -22,16 +23,23 @@ def listenCommand():
     data, addr = s.recvfrom(1024)
     stringdata = data.decode("utf-8")
     print("received message: " + stringdata)
+    time.sleep(0.1)
 
-
-
+def qkill():
+    global keep_running
+    keep_running = True
+    while True:
+        if input() == "exit":
+            keep_running = False
+            s.close()
+            print("server is closing")
 
 print("the server is starting")
 #load config.ini
 loadConfig()
 setupNetwork()
-print("the server is ready")
-while True:
+threadkill = threading.Thread(target=qkill, daemon=True).start()
+print("Type exit to close the server")
+while keep_running:
     listenCommand()
-    
-
+    Time.sleep(0.1)
