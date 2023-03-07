@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class MainMenuManager : MonoBehaviour
@@ -45,7 +46,7 @@ public class MainMenuManager : MonoBehaviour
         PlayerPrefs.SetString("username", username);
         PlayerPrefs.SetString("hostname", hostname);
         //Load the game scene
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Game");
     }
 
     public void exit()

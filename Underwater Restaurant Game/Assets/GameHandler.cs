@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 public class GameHandler : MonoBehaviour
@@ -36,6 +37,6 @@ public class GameHandler : MonoBehaviour
     IEnumerator WaitForOneSecond()
     {
         yield return new WaitForSeconds(0.1f);
-        Application.LoadLevel("Menu");
+        SceneManager.LoadScene("Menu");
     }
 }
