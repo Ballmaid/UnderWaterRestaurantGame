@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameHandler : MonoBehaviour
 {
+
+    public Networking network;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,15 @@ public class GameHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.LoadLevel("Menu");
+            //Disconnect from the server
+            network.disconnectPlayer(PlayerPrefs.GetString("username"));
+            StartCoroutine(WaitForOneSecond());
         }
+    }
+
+    IEnumerator WaitForOneSecond()
+    {
+        yield return new WaitForSeconds(0.1f);
+        Application.LoadLevel("Menu");
     }
 }

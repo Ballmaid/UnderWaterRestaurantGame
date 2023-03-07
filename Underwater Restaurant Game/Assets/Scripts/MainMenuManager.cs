@@ -10,13 +10,15 @@ public class MainMenuManager : MonoBehaviour
     
     //Textmeshpro input field
     public TMP_InputField HostnameInput;
+    public TMP_InputField UsernameInput;
     //Textmeshpro text 
     public TextMeshProUGUI StartText;
     public Button StartButton;
     // Start is called before the first frame update
     void Start()
     {
-        
+        UsernameInput.text = PlayerPrefs.GetString("username");
+        HostnameInput.text = PlayerPrefs.GetString("hostname");
     }
 
     // Update is called once per frame
@@ -37,8 +39,10 @@ public class MainMenuManager : MonoBehaviour
     public void start()
     {
         //Get the text from the input field
+        string username = UsernameInput.text;
         string hostname = HostnameInput.text;
         //Connect to the server
+        PlayerPrefs.SetString("username", username);
         PlayerPrefs.SetString("hostname", hostname);
         //Load the game scene
         UnityEngine.SceneManagement.SceneManager.LoadScene("Game");

@@ -14,6 +14,7 @@ public class Networking : MonoBehaviour
 
     [Header("Networking")]
     string hostname;
+    string username;
     string ServerName;
     int port = 1008;
 
@@ -24,10 +25,11 @@ public class Networking : MonoBehaviour
     void Start()
     {
         hostname = PlayerPrefs.GetString("hostname");
-        connectPlayer("Leon");
+        username = PlayerPrefs.GetString("username");
+        Debug.Log(IPAddress.Parse(hostname));
         serverEndPoint = new IPEndPoint(IPAddress.Parse(hostname), port);
         client = new UdpClient();
-
+        connectPlayer(username);
     }
 
     // Update is called once per frame
@@ -43,9 +45,15 @@ public class Networking : MonoBehaviour
         return "ServerName";
     }
 
+    public void disconnectPlayer(string playername){
+        sendMessage(12, playername, hostname);
+    }
+
     void sendMessage(int ID, string message, string addr) {
         // Send UDP message to server
             byte[] data = System.Text.Encoding.ASCII.GetBytes(ID.ToString() + "," + message);
             client.Send(data, data.Length, serverEndPoint);
     }
+
+    
 }
