@@ -240,6 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ServerInfoText: {fileID: 1412466721}
   playerID: 0
+  players: []
 --- !u!1 &270333393
 GameObject:
   m_ObjectHideFlags: 0

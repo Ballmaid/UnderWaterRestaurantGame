@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
 using System.Net;
@@ -12,18 +13,16 @@ public class Networking : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI ServerInfoText;
 
-    [Header("Networking")]
     string hostname;
     string username;
     string ServerName;
     public string playerID = "0";
-    int port = 1008;
-
-    IPEndPoint serverEndPoint;
-    UdpClient client;
-
-    [Header("Players")]
     public List<Player> players = new List<Player>();
+    int port = 1008;
+    bool receivingnow = false;
+    public UdpConnection connection;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,13 +31,21 @@ public class Networking : MonoBehaviour
         username = PlayerPrefs.GetString("username");
         Debug.Log("Connecting to " + hostname);
         Debug.Log(IPAddress.Parse(hostname));
-        serverEndPoint = new IPEndPoint(IPAddress.Parse(hostname), port);
-        client = new UdpClient();
+
+        connection = new UdpConnection();
+        connection.StartConnection(hostname, 1008, 1008);
+
         connectPlayer(username);
     }
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    //late update
+    void LateUpdate()
     {
         receiveMessage();
     }
@@ -55,45 +62,54 @@ public class Networking : MonoBehaviour
     }
 
     public void sendMessage(int ID, string message) {
-        // Send UDP message to server
-            byte[] data = System.Text.Encoding.ASCII.GetBytes(ID.ToString() + "," + message);
-            client.Send(data, data.Length, serverEndPoint);
+        
+            connection.Send(ID.ToString() + "," + message);
     }
 
-    public void receiveMessage() {
-        // Receive UDP message from server
-        IPEndPoint anyIP = new IPEndPoint(IPAddress.Any, 0);
-        byte[] data = client.Receive(ref anyIP);
-        string text = System.Text.Encoding.ASCII.GetString(data);
-        // Separate ID and message from format "ID,var1,var2,var3..."
-        string[] split = text.Split(',');
-        int ID = int.Parse(split[0]);
-        switch (ID) {
-            case 1:
-                // All Players movement
-                // Format: "1,playerID,x,PlayerID,x,PlayerID,x..."
-                break;
-            case 11:
-                if(split[3] == username){
-                    ServerName = split[1];
-                    playerID = split[2];
-                }
-                else{
-                    Player newPlayer = new Player();
-                    newPlayer.id = split[2];
-                    newPlayer.username = split[3];
-                    players.Add(newPlayer);
-                }
-                ServerInfoText.text = "Connected to " + ServerName;
-                break;
+
+    public void receiveMessage(){
+        foreach (string message in connection.getMessages())
+        {
+            string[] split = message.Split(',');
+            int ID = int.Parse(split[0]);
+            switch (ID) {
+                case 1:
+                    Debug.Log("Received message: " + split[1]);
+                    break;
+                case 11:
+                    Debug.Log("Detected Player with ID: " + split[1] + " and name: " + split[2]);
+                    if(split[3] == username){
+                        ServerName = split[1];
+                        playerID = split[2];
+                    }
+                    else{
+                        
+                        Player newPlayer = new Player();
+                        newPlayer.id = split[2];
+                        newPlayer.username = split[3];
+                        newPlayer.alive();
+                        players.Add(newPlayer);
+                        
+                    }
+                    ServerInfoText.text = "Connected to " + ServerName;
+                    break;
+            }
         }
     }
 }
 
 
-public class Player
+public class Player : MonoBehaviour
 {
+    public static Object playerprefab = Resources.Load("Prefabs/PlayerPrefab");
     public string id;
     public string username;
     public int posX = 0;
+    public GameObject playerObject = Instantiate(playerprefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+    public void alive(){
+    }
+    public void move()
+    {
+        playerObject.transform.position = new Vector3(posX, 0, 0);
+    }
 }
