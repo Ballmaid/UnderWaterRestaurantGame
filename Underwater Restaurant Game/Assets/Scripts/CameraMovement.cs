@@ -7,11 +7,17 @@ public class CameraMovement : MonoBehaviour
 {
     public Transform CameraTransform;
     public Slider CameraSlider;
+    public Networking network;
 
     // Start is called before the first frame update
     void Start()
     {
         CameraSlider.maxValue = 40;
+        InvokeRepeating("NetworkMovement", 0, 0.1f);
+    }
+
+    void NetworkMovement() {
+        network.sendMessage(0, network.playerID + "," + CameraTransform.position.x.ToString() );
     }
 
     // Update is called once per frame
