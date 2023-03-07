@@ -26,12 +26,14 @@ def listenCommand():
     #stringdata is in format "msgtype,var1,var2,var3..." 
     #msgtype 
     #1X is for player
-    #2X is for economy
+    #2X is for items  
     messagelist = stringdata.split(",")
     messagetype = messagelist[0]
     match messagetype:
         case "10":                          #player connected
             connectPlayer(messagelist[1], addr)
+        case "12":                          #player disconnected
+            disconnectPlayer(messagelist[1])
         
     time.sleep(0.1)
 
@@ -52,6 +54,12 @@ def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
     playerlist.append(Player(UserName, addr))
     
+def disconnectPlayer(UserName):
+    print("Player " + UserName + " disconnected")
+    for player in playerlist:
+        if player.UserName == UserName:
+            playerlist.remove(player)
+            break
 
 
 
@@ -64,11 +72,10 @@ class Player:
         self.UserName = UserName
         self.addr = addr
         for i in range(0, 1000):
-            for player in playerlist:
-                if player.id == i:
-                    break
-            id = i
-        sendCommand("11," + ServerName + "," + self.id + "," + self.UserName, addr)
+            if not any(player.id == i for player in playerlist):
+                self.id = i
+                break
+        sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, addr)
     
 
 
