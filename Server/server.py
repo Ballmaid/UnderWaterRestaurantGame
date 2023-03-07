@@ -31,7 +31,7 @@ def listenCommand():
     messagetype = messagelist[0]
     match messagetype:
         case "0":                           #player is moving
-            movePlayer(messagelist[1], messagelist[2])
+            movePlayer(messagelist[1], messagelist[2], addr)
         case "10":                          #player connected
             connectPlayer(messagelist[1], addr)
         case "12":                          #player disconnected
@@ -63,16 +63,20 @@ def disconnectPlayer(UserName):
             playerlist.remove(player)
             break
 
-def movePlayer(UserName, pos, addr):
+def movePlayer(ID, pos, addr):
+    
     for player in playerlist:
-        if player.UserName == UserName:
+        if player.id == int(ID):
             player.pos = pos
             sendPlayerStatus(addr)
             break
 
 def sendPlayerStatus(addr):
-
-
+    message = "1,"
+    for player in playerlist:
+        message += str(player.id) + "," + str(player.pos) + ","
+    message = message[:-1]
+    sendCommand(message, addr)
 
 class Player:
     UserName = ""
