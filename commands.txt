@@ -1,4 +1,0 @@
-10 = connectPlayer(PlayerName)
-11 = serverStatus(ServerName)
-12 = disconnectPlayer(PlayerName)
-13 = disconnectAck()
