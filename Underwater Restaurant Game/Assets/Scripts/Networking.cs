@@ -16,6 +16,7 @@ public class Networking : MonoBehaviour
     string hostname;
     string username;
     string ServerName;
+    public string playerID = "0";
     int port = 1008;
 
     IPEndPoint serverEndPoint;
@@ -39,21 +40,21 @@ public class Networking : MonoBehaviour
     }
 
     string connectPlayer(string playername){
-        sendMessage(10, playername, hostname);
+        sendMessage(10, playername);
 
         ServerInfoText.text = "Connected to " + hostname;
         return "ServerName";
     }
 
     public void disconnectPlayer(string playername){
-        sendMessage(12, playername, hostname);
+        sendMessage(12, playername);
     }
 
-    void sendMessage(int ID, string message, string addr) {
+    public void sendMessage(int ID, string message) {
         // Send UDP message to server
             byte[] data = System.Text.Encoding.ASCII.GetBytes(ID.ToString() + "," + message);
             client.Send(data, data.Length, serverEndPoint);
     }
 
-    
+
 }
