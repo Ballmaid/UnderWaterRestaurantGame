@@ -50,7 +50,26 @@ def qkill():
 
 def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
-    sendCommand("11," + ServerName, addr)
+    playerlist.append(Player(UserName, addr))
+    
+
+
+
+class Player:
+    UserName = ""
+    addr = ""
+    id = 0
+    pos = 0
+    def __init__(self, UserName, addr):
+        self.UserName = UserName
+        self.addr = addr
+        for i in range(0, 1000):
+            for player in playerlist:
+                if player.id == i:
+                    break
+            id = i
+        sendCommand("11," + ServerName + "," + self.id + "," + self.UserName, addr)
+    
 
 
 
@@ -59,5 +78,6 @@ loadConfig()
 setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
+playerlist = []
 while keep_running:
     listenCommand()
