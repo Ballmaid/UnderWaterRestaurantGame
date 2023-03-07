@@ -63,11 +63,14 @@ def disconnectPlayer(UserName):
             playerlist.remove(player)
             break
 
-def movePlayer(UserName, pos):
+def movePlayer(UserName, pos, addr):
     for player in playerlist:
         if player.UserName == UserName:
             player.pos = pos
+            sendPlayerStatus(addr)
             break
+
+def sendPlayerStatus(addr):
 
 
 
