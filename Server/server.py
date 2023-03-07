@@ -63,6 +63,12 @@ def disconnectPlayer(UserName):
             playerlist.remove(player)
             break
 
+def movePlayer(UserName, pos):
+    for player in playerlist:
+        if player.UserName == UserName:
+            player.pos = pos
+            break
+
 
 
 class Player:
