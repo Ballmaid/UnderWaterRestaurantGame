@@ -30,6 +30,8 @@ def listenCommand():
     messagelist = stringdata.split(",")
     messagetype = messagelist[0]
     match messagetype:
+        case "0":                           #player is moving
+            movePlayer(messagelist[1], messagelist[2])
         case "10":                          #player connected
             connectPlayer(messagelist[1], addr)
         case "12":                          #player disconnected
