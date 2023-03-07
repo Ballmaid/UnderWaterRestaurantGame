@@ -8,7 +8,7 @@ public class GameHandler : MonoBehaviour
 {
 
     public Networking network;
-
+    
 
     // Start is called before the first frame update
     void Start()

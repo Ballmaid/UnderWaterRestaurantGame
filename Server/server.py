@@ -90,7 +90,8 @@ class Player:
             if not any(player.id == i for player in playerlist):
                 self.id = i
                 break
-        sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, addr)
+        for clientplayer in playerlist:
+            sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, addr)
     
 
 
