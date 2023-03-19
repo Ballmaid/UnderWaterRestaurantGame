@@ -21,6 +21,7 @@ public class Networking : MonoBehaviour
     int port = 1008;
     bool receivingnow = false;
     public UdpConnection connection;
+    public string buffer = "C";
 
     
 
@@ -62,38 +63,67 @@ public class Networking : MonoBehaviour
     }
 
     public void sendMessage(int ID, string message) {
+        if (buffer == "C") {
+            buffer += ID + "," + message;
+        }
+        else {
+            buffer += ";" + ID + "," + message;
+        }
         
-            connection.Send(ID.ToString() + "," + message);
     }
+
+    public void flushBuffer() {
+        if (buffer != "C") {
+            sendUDP(buffer);
+            buffer = "C";
+        }
+    }
+
+    
+    public void sendUDP(string message) {
+        
+        connection.Send(message);
+    }
+
 
 
     public void receiveMessage(){
         foreach (string message in connection.getMessages())
         {
-            string[] split = message.Split(',');
-            int ID = int.Parse(split[0]);
-            switch (ID) {
-                case 1:
-                    Debug.Log("Received message: " + split[1]);
-                    break;
-                case 11:
-                    Debug.Log("Detected Player with ID: " + split[1] + " and name: " + split[2]);
-                    if(split[3] == username){
-                        ServerName = split[1];
-                        playerID = split[2];
+            // if message begins with S, remove it
+            if (message.StartsWith("S")) {
+                message = message.Substring(1);
+            
+                string[] globalSplit = message.Split(';');
+                foreach ( string s in globalSplit)
+                {
+                    string[] split = globalSplit.Split(',');
+                    int ID = int.Parse(split[0]);
+                    switch (ID) {
+                        case 1:
+                            Debug.Log("Received message: " + split[1]);
+                            break;
+                        case 11:
+                            Debug.Log("Detected Player with ID: " + split[1] + " and name: " + split[2]);
+                            if(split[3] == username){
+                                ServerName = split[1];
+                                playerID = split[2];
+                            }
+                            else{
+                                
+                                Player newPlayer = new Player();
+                                newPlayer.id = split[2];
+                                newPlayer.username = split[3];
+                                newPlayer.alive();
+                                players.Add(newPlayer);
+                                
+                            }
+                            ServerInfoText.text = "Connected to " + ServerName;
+                            break;
                     }
-                    else{
-                        
-                        Player newPlayer = new Player();
-                        newPlayer.id = split[2];
-                        newPlayer.username = split[3];
-                        newPlayer.alive();
-                        players.Add(newPlayer);
-                        
-                    }
-                    ServerInfoText.text = "Connected to " + ServerName;
-                    break;
+                }
             }
+            
         }
     }
 }
