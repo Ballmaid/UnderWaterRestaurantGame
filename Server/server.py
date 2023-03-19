@@ -124,7 +124,7 @@ class Player:
             print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
-    def announceMyself():
+    def announceMyself(self):
         for clientplayer in playerlist:
             print("0th Player has ID " + playerlist[0].id)
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
