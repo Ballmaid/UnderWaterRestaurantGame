@@ -70,9 +70,8 @@ def connectPlayer(UserName, addr):
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
     for player in playerlist:
-        if player.addr == addr:
-            player.announceMyself()
-            break
+        player.announceMyself()
+        break
     
 def disconnectPlayer(UserName):
     print("Player " + UserName + " disconnected")
@@ -116,17 +115,10 @@ class Player:
         for i in range(0, 1000):
             if not any(player.id == i for player in playerlist):
                 self.id = i
-                print("My id is " + str(self.id))
                 break
-        
-        for clientplayer in playerlist:
-            
-            print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
-            sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
     def announceMyself(self):
         for clientplayer in playerlist:
-            print("0th Player has Name " + str(playerlist[0].UserName))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
 
 

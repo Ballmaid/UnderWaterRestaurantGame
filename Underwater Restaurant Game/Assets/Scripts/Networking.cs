@@ -10,8 +10,10 @@ using System.Net.Sockets;
 public class Networking : MonoBehaviour
 {
 
-    [Header("UI Elements")]
     public TextMeshProUGUI ServerInfoText;
+
+    public Object playerprefabtemplate;
+
 
     string hostname;
     string username;
@@ -104,8 +106,18 @@ public class Networking : MonoBehaviour
                     int ID = int.Parse(split[0]);
                     Debug.Log("ID: " + ID);
                     switch (ID) {
-                        case 1: //SendPlayerStatus
-                            
+                        case 1: //SendPlayerStatus(PlayerID, X Position Value, Player ID, X Position Value, Player ID, X Position Value, etc.)
+                            for (int i = 1; i < split.Length; i += 2) {
+                                if (split[i] == playerID) {
+                                    //do nothing
+                                }
+                                else {
+                                    foreach (Player p in players) {
+                                        p.posX = int.Parse(split[i + 1]);
+                                        p.move();
+                                    }
+                                }
+                            }
                             break;
                         case 11: //serverStatus (ServerName, PlayerID, PlayerName)
 
@@ -136,12 +148,13 @@ public class Networking : MonoBehaviour
 
 public class Player : MonoBehaviour
 {
-    public static Object playerprefab = Resources.Load("Prefabs/PlayerPrefab");
+    public static Object playerprefab = Resources.Load("PlayerPrefab");
     public string id;
     public string username;
     public int posX = 0;
     public GameObject playerObject = Instantiate(playerprefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
     public void alive(){
+
     }
     public void move()
     {
