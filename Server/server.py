@@ -78,7 +78,6 @@ def disconnectPlayer(UserName):
             break
 
 def movePlayer(ID, pos, addr):
-    
     for player in playerlist:
         if player.id == int(ID):
             player.pos = pos
@@ -114,7 +113,7 @@ class Player:
                 self.id = i
                 break
         for clientplayer in playerlist:
-            sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, addr)
+            sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
 class Buffer:
     addr = ""
