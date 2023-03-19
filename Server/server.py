@@ -123,6 +123,11 @@ class Player:
             print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
+    def announceMyself():
+        for clientplayer in playerlist:
+            sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
+
+
 class Buffer:
     addr = ""
     buffer = "S"
