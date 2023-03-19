@@ -3,6 +3,10 @@ import socket
 import threading
 import time
 
+
+bufferlist = []
+
+
 def loadConfig():
     global Maxplayers, ServerName, Password
     config = configparser.ConfigParser()
@@ -40,12 +44,15 @@ def listenCommand():
                     connectPlayer(messagelist[1], addr)
                 case "12":                          #player disconnected
                     disconnectPlayer(messagelist[1])
-                
+            
+            for buffer in bufferlist:
+                if buffer.addr == addr:
+                    buffer.flush()
+                    break
             time.sleep(0.1)
 
 
-def sendCommand(command, addr):
-    s.sendto(command.encode("utf-8"), addr)
+
 
 def qkill():
     global keep_running
@@ -59,6 +66,7 @@ def qkill():
 def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
     playerlist.append(Player(UserName, addr))
+    bufferlist.append(Buffer(addr))
     
 def disconnectPlayer(UserName):
     print("Player " + UserName + " disconnected")
@@ -82,6 +90,15 @@ def sendPlayerStatus(addr):
     message = message[:-1]
     sendCommand(message, addr)
 
+def sendCommand(command, addr):
+    for buffer in bufferlist:
+        if buffer.addr == addr:
+            buffer.add(command)
+            break
+
+def sendUDP(command, addr):
+    s.sendto(command.encode("utf-8"), addr)
+
 class Player:
     UserName = ""
     addr = ""
@@ -97,6 +114,18 @@ class Player:
         for clientplayer in playerlist:
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, addr)
     
+class Buffer:
+    addr = ""
+    buffer = "S"
+    def __init__(self, addr):
+        self.addr = addr
+    def add(self, data):
+        self.buffer += data
+    def flush(self):
+        if self.buffer != "S":
+            sendUDP(self.buffer, self.addr)
+            self.buffer = "S"
+
 
 
 
