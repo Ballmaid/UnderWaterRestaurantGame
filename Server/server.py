@@ -117,7 +117,9 @@ class Player:
                 self.id = i
                 print("My id is " + str(self.id))
                 break
+        
         for clientplayer in playerlist:
+            print("Clientplayer with ID" + str(clientplayer.id) + " and Name " + clientplayer.UserName)
             print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
