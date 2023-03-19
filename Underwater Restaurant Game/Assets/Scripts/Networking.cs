@@ -74,6 +74,7 @@ public class Networking : MonoBehaviour
 
     public void flushBuffer() {
         if (buffer != "C") {
+            print("Sending: " + buffer);
             sendUDP(buffer);
             buffer = "C";
         }
@@ -89,22 +90,27 @@ public class Networking : MonoBehaviour
     public void receiveMessage(){
         foreach (string message in connection.getMessages())
         {
+            
             // if message begins with S, remove it
             if (message.StartsWith("S")) {
                 string mess = message.Substring(1); 
             
-            
+                
+
                 string[] globalSplit = mess.Split(';');
                 foreach ( string s in globalSplit)
                 {
+                    Debug.Log("Received: " + s);
                     string[] split = s.Split(',');
                     int ID = int.Parse(split[0]);
+                    Debug.Log("ID: " + ID);
                     switch (ID) {
-                        case 1:
-                            Debug.Log("Received message: " + split[1]);
+                        case 1: //SendPlayerStatus
+                            
                             break;
-                        case 11:
-                            Debug.Log("Detected Player with ID: " + split[1] + " and name: " + split[2]);
+                        case 11: //serverStatus (ServerName, PlayerID, PlayerName)
+
+                            Debug.Log("Detected Player with ID: " + split[2] + " and name: " + split[3]);
                             if(split[3] == username){
                                 ServerName = split[1];
                                 playerID = split[2];
