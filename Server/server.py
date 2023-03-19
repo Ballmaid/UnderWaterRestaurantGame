@@ -34,6 +34,8 @@ def listenCommand():
     #If stringdata begins with C
     if stringdata[0] == "C":
         globalmessagelist = stringdata.split(";")
+        #remove the C
+        globalmessagelist[0] = globalmessagelist[0][1:]
         for globalmessage in globalmessagelist:
             messagelist = globalmessage.split(",")
             messagetype = messagelist[0]
@@ -120,7 +122,11 @@ class Buffer:
     def __init__(self, addr):
         self.addr = addr
     def add(self, data):
-        self.buffer += data
+        if self.buffer == "S":
+            self.buffer += data
+        else:
+            self.buffer += ";" + data
+
     def flush(self):
         if self.buffer != "S":
             sendUDP(self.buffer, self.addr)
