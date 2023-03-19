@@ -69,7 +69,8 @@ def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
-    print("Playerlist = " + str(playerlist))
+    for clientplayer in playerlist:
+         print("Player " + clientplayer.UserName + " exists")
     
 def disconnectPlayer(UserName):
     print("Player " + UserName + " disconnected")
