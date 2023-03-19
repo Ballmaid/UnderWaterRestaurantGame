@@ -27,17 +27,21 @@ def listenCommand():
     #msgtype 
     #1X is for player
     #2X is for items  
-    messagelist = stringdata.split(",")
-    messagetype = messagelist[0]
-    match messagetype:
-        case "0":                           #player is moving
-            movePlayer(messagelist[1], messagelist[2], addr)
-        case "10":                          #player connected
-            connectPlayer(messagelist[1], addr)
-        case "12":                          #player disconnected
-            disconnectPlayer(messagelist[1])
-        
-    time.sleep(0.1)
+    #If stringdata begins with C
+    if stringdata[0] == "C":
+        globalmessagelist = stringdata.split(";")
+        for globalmessage in globalmessagelist:
+            messagelist = globalmessage.split(",")
+            messagetype = messagelist[0]
+            match messagetype:
+                case "0":                           #player is moving
+                    movePlayer(messagelist[1], messagelist[2], addr)
+                case "10":                          #player connected
+                    connectPlayer(messagelist[1], addr)
+                case "12":                          #player disconnected
+                    disconnectPlayer(messagelist[1])
+                
+            time.sleep(0.1)
 
 
 def sendCommand(command, addr):
