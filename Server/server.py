@@ -92,7 +92,6 @@ def sendPlayerStatus(addr):
     sendCommand(message, addr)
 
 def sendCommand(command, addr):
-    print("sending " + command + " to " + str(addr))
     for buffer in bufferlist:
         if buffer.addr == addr:
             buffer.add(command)
@@ -107,6 +106,7 @@ class Player:
     id = 0
     pos = 0
     def __init__(self, UserName, addr):
+        print("Init player " + UserName)
         self.UserName = UserName
         self.addr = addr
         for i in range(0, 1000):
