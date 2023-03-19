@@ -92,6 +92,7 @@ def sendPlayerStatus(addr):
     sendCommand(message, addr)
 
 def sendCommand(command, addr):
+    print("sending " + command + " to " + str(addr))
     for buffer in bufferlist:
         if buffer.addr == addr:
             buffer.add(command)
@@ -128,7 +129,6 @@ class Buffer:
 
     def flush(self):
         if self.buffer != "S":
-            print("sending " + self.buffer)
             sendUDP(self.buffer, self.addr)
             self.buffer = "S"
 
