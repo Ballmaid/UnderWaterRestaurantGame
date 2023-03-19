@@ -69,6 +69,7 @@ def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
+    print("Buffer addr is now " + str(bufferlist[0].addr))
     for clientplayer in playerlist:
          print("Player " + clientplayer.UserName + " exists")
     
@@ -114,6 +115,7 @@ class Player:
         for i in range(0, 1000):
             if not any(player.id == i for player in playerlist):
                 self.id = i
+                print("My id is " + str(self.id))
                 break
         for clientplayer in playerlist:
             print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
