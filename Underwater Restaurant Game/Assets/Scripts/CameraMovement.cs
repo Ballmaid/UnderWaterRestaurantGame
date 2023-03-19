@@ -18,6 +18,7 @@ public class CameraMovement : MonoBehaviour
 
     void NetworkMovement() {
         network.sendMessage(0, network.playerID + "," + CameraTransform.position.x.ToString() );
+        network.flushBuffer();
     }
 
     // Update is called once per frame

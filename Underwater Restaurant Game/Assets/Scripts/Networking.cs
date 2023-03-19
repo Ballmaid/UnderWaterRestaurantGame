@@ -81,7 +81,6 @@ public class Networking : MonoBehaviour
 
     
     public void sendUDP(string message) {
-        
         connection.Send(message);
     }
 
