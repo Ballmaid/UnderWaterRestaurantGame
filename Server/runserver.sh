@@ -1,1 +1,1 @@
-I dont know
+python3.10 ./server.py
