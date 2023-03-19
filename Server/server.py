@@ -114,6 +114,7 @@ class Player:
                 self.id = i
                 break
         for clientplayer in playerlist:
+            print("sending " + "11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + str(clientplayer.addr))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
     
 class Buffer:
