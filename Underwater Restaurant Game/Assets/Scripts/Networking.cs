@@ -92,12 +92,13 @@ public class Networking : MonoBehaviour
         {
             // if message begins with S, remove it
             if (message.StartsWith("S")) {
-                message = message.Substring(1);
+                string mess = message.Substring(1); 
             
-                string[] globalSplit = message.Split(';');
+            
+                string[] globalSplit = mess.Split(';');
                 foreach ( string s in globalSplit)
                 {
-                    string[] split = globalSplit.Split(',');
+                    string[] split = s.Split(',');
                     int ID = int.Parse(split[0]);
                     switch (ID) {
                         case 1:
