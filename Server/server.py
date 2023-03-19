@@ -5,7 +5,7 @@ import time
 
 
 bufferlist = []
-
+playerlist = []
 
 def loadConfig():
     global Maxplayers, ServerName, Password
@@ -69,6 +69,7 @@ def connectPlayer(UserName, addr):
     print("Player " + UserName + " connected")
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
+    print("Playerlist = " + str(playerlist))
     
 def disconnectPlayer(UserName):
     print("Player " + UserName + " disconnected")
@@ -141,6 +142,6 @@ loadConfig()
 setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
-playerlist = []
+
 while keep_running:
     listenCommand()
