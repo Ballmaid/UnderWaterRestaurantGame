@@ -129,6 +129,7 @@ class Buffer:
 
     def flush(self):
         if self.buffer != "S":
+            print("sending " + self.buffer)
             sendUDP(self.buffer, self.addr)
             self.buffer = "S"
 

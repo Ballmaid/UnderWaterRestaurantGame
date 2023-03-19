@@ -74,7 +74,6 @@ public class Networking : MonoBehaviour
 
     public void flushBuffer() {
         if (buffer != "C") {
-            print("Sending: " + buffer);
             sendUDP(buffer);
             buffer = "C";
         }
