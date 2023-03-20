@@ -13,7 +13,7 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         CameraSlider.maxValue = 40;
-        InvokeRepeating("NetworkMovement", 0, 0.5f);
+        InvokeRepeating("NetworkMovement", 0, 0.2f);
     }
 
     void NetworkMovement() {

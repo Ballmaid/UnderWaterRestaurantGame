@@ -6,7 +6,7 @@ import time
 
 bufferlist = []
 playerlist = []
-
+tick_time = 0
 def loadConfig():
     global Maxplayers, ServerName, Password
     config = configparser.ConfigParser()
@@ -135,6 +135,9 @@ class Buffer:
 
     def flush(self):
         if self.buffer != "S":
+            
+            print("Tickrate: " + str(1/(time.time() - tick_time)))
+            tick_time = time.time()
             sendUDP(self.buffer, self.addr)
             self.buffer = "S"
 
