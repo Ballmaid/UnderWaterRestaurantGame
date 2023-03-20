@@ -125,6 +125,7 @@ public class Networking : MonoBehaviour
                             if(split[3] == username){
                                 ServerName = split[1];
                                 playerID = split[2];
+                                ServerInfoText.text = "Connected to " + ServerName + " with ID: " + playerID;
                             }
                             else{
                                 
@@ -135,7 +136,6 @@ public class Networking : MonoBehaviour
                                 players.Add(newPlayer);
                                 
                             }
-                            ServerInfoText.text = "Connected to " + ServerName;
                             break;
                     }
                 }

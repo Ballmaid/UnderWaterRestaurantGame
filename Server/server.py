@@ -119,6 +119,7 @@ class Player:
     
     def announceMyself(self):
         for clientplayer in playerlist:
+            print("Sending 11," + ServerName + "," + str(self.id) + "," + self.UserName + " to " + clientplayer.UserName + "at " + str(clientplayer.addr))
             sendCommand("11," + ServerName + "," + str(self.id) + "," + self.UserName, clientplayer.addr)
 
 
