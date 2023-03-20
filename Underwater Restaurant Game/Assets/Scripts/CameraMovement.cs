@@ -13,11 +13,11 @@ public class CameraMovement : MonoBehaviour
     void Start()
     {
         CameraSlider.maxValue = 40;
-        InvokeRepeating("NetworkMovement", 0, 1f);
+        InvokeRepeating("NetworkMovement", 0, 0.5f);
     }
 
     void NetworkMovement() {
-        network.sendMessage(0, network.playerID + "," + CameraTransform.position.x.ToString() );
+        network.sendMessage(0, network.playerID + "," + ((int)CameraTransform.position.x).ToString() );
         network.flushBuffer();
     }
 

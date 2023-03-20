@@ -104,7 +104,6 @@ public class Networking : MonoBehaviour
                     Debug.Log("Received: " + s);
                     string[] split = s.Split(',');
                     int ID = int.Parse(split[0]);
-                    Debug.Log("ID: " + ID);
                     switch (ID) {
                         case 1: //SendPlayerStatus(PlayerID, X Position Value, Player ID, X Position Value, Player ID, X Position Value, etc.)
                             for (int i = 1; i < split.Length; i += 2) {
@@ -153,8 +152,10 @@ public class Player : MonoBehaviour
     public string username;
     public int posX = 0;
     public GameObject playerObject = Instantiate(playerprefab, new Vector3(0, 0, -1), Quaternion.identity) as GameObject;
+    public TextMeshProUGUI playerText;
     public void alive(){
-
+        playerText = playerObject.GetComponentInChildren<TextMeshProUGUI>();
+        playerText.text = username;
     }
     public void move()
     {
