@@ -101,19 +101,22 @@ public class Networking : MonoBehaviour
                 string[] globalSplit = mess.Split(';');
                 foreach ( string s in globalSplit)
                 {
-                    Debug.Log("Received: " + s);
+                    //Debug.Log("Received: " + s);
                     string[] split = s.Split(',');
                     int ID = int.Parse(split[0]);
                     switch (ID) {
                         case 1: //SendPlayerStatus(PlayerID, X Position Value, Player ID, X Position Value, Player ID, X Position Value, etc.)
                             for (int i = 1; i < split.Length; i += 2) {
                                 if (split[i] == playerID) {
+
                                     //do nothing
                                 }
                                 else {
                                     foreach (Player p in players) {
-                                        p.posX = int.Parse(split[i + 1]);
-                                        p.move();
+                                        if (p.id == split[i]) {
+                                            p.posX = int.Parse(split[i + 1]);
+                                            p.move();
+                                        }
                                     }
                                 }
                             }

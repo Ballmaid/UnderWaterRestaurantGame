@@ -70,7 +70,6 @@ def connectPlayer(UserName, addr):
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
     for clientplayer in playerlist:
-        print("Announcing player " + clientplayer.UserName)
         clientplayer.announceMyself()
     
 def disconnectPlayer(UserName):
