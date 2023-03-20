@@ -125,6 +125,7 @@ class Buffer:
     addr = ""
     buffer = "S"
     global tick_time
+    tick_time = time.time()
     def __init__(self, addr):
         self.addr = addr
     def add(self, data):
