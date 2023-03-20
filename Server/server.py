@@ -70,6 +70,7 @@ def connectPlayer(UserName, addr):
     playerlist.append(Player(UserName, addr))
     bufferlist.append(Buffer(addr))
     for player in playerlist:
+        print("Announcing player " + player.UserName)
         player.announceMyself()
         break
     
