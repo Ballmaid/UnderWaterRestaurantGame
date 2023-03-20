@@ -50,7 +50,6 @@ def listenCommand():
                 if buffer.addr == addr:
                     buffer.flush()
                     break
-            time.sleep(0.1)
 
 
 
