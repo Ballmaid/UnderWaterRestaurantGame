@@ -20,7 +20,7 @@ public class Networking : MonoBehaviour
     string ServerName;
     public string playerID = "0";
     public List<Player> players = new List<Player>();
-    int port = 1008;
+    int port = 1007;
     bool receivingnow = false;
     public UdpConnection connection;
     public string buffer = "C";
@@ -36,7 +36,7 @@ public class Networking : MonoBehaviour
         Debug.Log(IPAddress.Parse(hostname));
 
         connection = new UdpConnection();
-        connection.StartConnection(hostname, 1008, 1008);
+        connection.StartConnection(hostname, 1008, 1007);
 
         connectPlayer(username);
     }
