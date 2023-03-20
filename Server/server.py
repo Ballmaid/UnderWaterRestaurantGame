@@ -138,7 +138,7 @@ class Buffer:
         if self.buffer != "S":
             #measure time between calls to flush
             global tick_time
-            print("tick time = " + str(time.time() - tick_time))
+            print("tick time in ms: " + str(round((time.time() - tick_time) * 1000, 1)))
             tick_time = time.time()
             sendUDP(self.buffer, self.addr)
             self.buffer = "S"
