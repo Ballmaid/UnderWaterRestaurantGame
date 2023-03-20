@@ -124,8 +124,6 @@ class Player:
 class Buffer:
     addr = ""
     buffer = "S"
-    global tick_time
-    tick_time = time.time()
     def __init__(self, addr):
         self.addr = addr
     def add(self, data):
@@ -136,10 +134,6 @@ class Buffer:
 
     def flush(self):
         if self.buffer != "S":
-            #measure time between calls to flush
-            global tick_time
-            print("tick time in ms: " + str(round((time.time() - tick_time) * 1000, 1)))
-            tick_time = time.time()
             sendUDP(self.buffer, self.addr)
             self.buffer = "S"
 
@@ -151,6 +145,10 @@ loadConfig()
 setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
-
+tick_time = time.time()
 while keep_running:
+    tick_time = time.time()
     listenCommand()
+    #Calculate tickrate in ms with accuracy 0.1ms and divide by amount of players
+    tickrate = round(((time.time() - tick_time) * 1000) / len(playerlist), 1)
+    print("Tickrate: " + str(tickrate) + "ms")
