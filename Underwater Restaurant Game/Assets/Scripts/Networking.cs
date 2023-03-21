@@ -24,6 +24,7 @@ public class Networking : MonoBehaviour
     bool receivingnow = false;
     public UdpConnection connection;
     public string buffer = "C";
+    ItemHandler itemhandler;
 
     
 
@@ -121,6 +122,9 @@ public class Networking : MonoBehaviour
                                 }
                             }
                             break;
+                        case 3: //MoveItemStatus(ItemID, X Value * 10, Y Value *10)
+                            itemhandler.MoveItemStatus(int.Parse(split[1]), int.Parse(split[2]), int.Parse(split[3]));
+                            break;
                         case 11: //serverStatus (ServerName, PlayerID, PlayerName)
 
                             Debug.Log("Detected Player with ID: " + split[2] + " and name: " + split[3]);
@@ -138,6 +142,15 @@ public class Networking : MonoBehaviour
                                 players.Add(newPlayer);
                                 
                             }
+                            break;
+                        case 20: //createItem(ItemID, ItemType, ItemState)
+                            itemhandler.createItem(int.Parse(split[1]), int.Parse(split[2]), int.Parse(split[3]));
+                            break;
+                        case 21: //destroyItem(ItemID)
+                            itemhandler.destroyItem(int.Parse(split[1]));
+                            break;
+                        case 22: //changeItemState(ItemID, ItemState)
+                            itemhandler.changeItemState(int.Parse(split[1]), int.Parse(split[2]));
                             break;
                     }
                 }

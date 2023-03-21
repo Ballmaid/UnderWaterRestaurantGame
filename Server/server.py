@@ -224,5 +224,6 @@ while keep_running:
     tick_time = time.time()
     listenCommand()
     #Calculate tickrate in ms with accuracy 0.1ms and divide by amount of players
-    tickrate = round(((time.time() - tick_time) * 1000) / len(playerlist), 1)
+
+    tickrate = round(((time.time() - tick_time) * 1000) * len(playerlist), 1)
     print("Tickrate: " + str(tickrate) + "ms")
