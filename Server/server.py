@@ -6,6 +6,7 @@ import time
 
 bufferlist = []
 playerlist = []
+itemslist = []
 def loadConfig():
     global Maxplayers, ServerName, Password
     config = configparser.ConfigParser()
@@ -41,6 +42,8 @@ def listenCommand():
             match messagetype:
                 case "0":                           #player is moving
                     movePlayer(messagelist[1], messagelist[2], addr)
+                case "2":                           #player is moving item
+                    moveItem(messagelist[1], messagelist[2], messagelist[3])
                 case "10":                          #player connected
                     connectPlayer(messagelist[1], addr)
                 case "12":                          #player disconnected
@@ -100,6 +103,43 @@ def sendCommand(command, addr):
 def sendUDP(command, addr):
     s.sendto(command.encode("utf-8"), addr)
 
+def createItem(ItemType, State):
+    ItemID = 0
+    for i in range(0, 10000):
+        if not any(item.id == i for item in itemslist):
+            ItemID = i
+            break
+    itemslist.append(Item(ItemID, ItemType, State))
+    for clientplayer in playerlist:
+        sendCommand("20," + ItemID + "," + ItemType + "," + State, clientplayer.addr)
+
+def destroyItem(ItemID):
+    for item in itemslist:
+        if item.id == int(ItemID):
+            itemslist.remove(item)
+            break
+    for clientplayer in playerlist:
+        sendCommand("21," + ItemID, clientplayer.addr)
+
+def changeItemState(ItemID, NewState):
+    for item in itemslist:
+        if item.id == int(ItemID):
+            item.state = NewState
+            break
+    for clientplayer in playerlist:
+        sendCommand("22," + ItemID + "," + NewState, clientplayer.addr)
+
+def moveItem(ItemID, NewPosX, NewPosY):
+    for item in itemslist:
+        if item.id == int(ItemID):
+            item.posX = NewPosX
+            item.posY = NewPosY
+            break
+
+def moveItemStatus(ItemID, NewPosX, NewPosY):
+    for clientplayer in playerlist:
+        sendCommand("1," + ItemID + "," + NewPosX + "," + NewPosY, clientplayer.addr)
+
 class Player:
     UserName = ""
     addr = ""
@@ -138,6 +178,40 @@ class Buffer:
 
 
 
+#======Items======
+#State is a string legth 16 used to store infos about the item
+class Item:
+    posX = 0
+    posY = 0
+    id = 0
+    state = "0000000000000000"
+    def __init__(self, posX, posY):
+        self.posX = posX
+        self.posY = posY
+
+
+class Cola(Item): #ID 0
+    opened = False
+    def __init__(self, pos):
+        super().__init__(pos)
+    def open(self):
+        self.opened = True
+        self.state = "0000000000000001"
+
+
+#======Stations======
+
+class SnackStation:
+    posX = 0
+    def __init__(self, posX):
+        self.posX = posX
+    def takeCola(self):
+        createItem(0, "0000000000000000")
+        moveItem(itemslist[-1].id, self.posX+10, 50)
+        
+
+
+
 
 print("the server is starting")
 loadConfig()
@@ -145,6 +219,7 @@ setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
 tick_time = time.time()
+Station1 = SnackStation(100)
 while keep_running:
     tick_time = time.time()
     listenCommand()
