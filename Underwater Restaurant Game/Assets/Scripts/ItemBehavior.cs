@@ -43,6 +43,6 @@ public class ItemBehavior : MonoBehaviour
     }
     public void MoveItem(int posX, int posY){
         networking.sendMessage(2, ItemID.ToString() + "," + (posX*1).ToString() + "," + (posY*1).ToString());
-        Debug.Log("ItemID: " + ItemID + " moved to " + posX + ", " + posY);
+        //Debug.Log("ItemID: " + ItemID + " moved to " + posX + ", " + posY);
     }
 }
