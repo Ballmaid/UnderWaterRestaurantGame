@@ -115,7 +115,7 @@ def createItem(ItemType, posX, posY, State):
         case "0":
             itemslist.append(Cola(posX, posY)) 
     for clientplayer in playerlist:
-        sendCommand("20," + ItemID + "," + ItemType + "," + State, clientplayer.addr)
+        sendCommand("20," + str(ItemID) + "," + ItemType + "," + State, clientplayer.addr)
 
 def destroyItem(ItemID):
     for item in itemslist:
