@@ -48,6 +48,8 @@ def listenCommand():
                     connectPlayer(messagelist[1], addr)
                 case "12":                          #player disconnected
                     disconnectPlayer(messagelist[1])
+                case "101":                        #takeCola
+                    Station1.takeCola()
             
             for buffer in bufferlist:
                 if buffer.addr == addr:
