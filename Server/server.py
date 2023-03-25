@@ -216,7 +216,7 @@ class SnackStation:
     def __init__(self, posX):
         self.posX = posX
     def takeCola(self):
-        createItem("0", self.posX, 50, "0000000000000000")
+        createItem("0", self.posX, 0, "0000000000000000")
         moveItem(itemslist[-1].id, self.posX+10, 50)
         
 
@@ -229,7 +229,7 @@ setupNetwork()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
 tick_time = time.time()
-Station1 = SnackStation(100)
+Station1 = SnackStation(0)
 while keep_running:
     tick_time = time.time()
     listenCommand()

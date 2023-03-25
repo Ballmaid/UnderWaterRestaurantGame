@@ -123,7 +123,7 @@ public class Networking : MonoBehaviour
                             }
                             break;
                         case 3: //MoveItemStatus(ItemID, X Value * 10, Y Value *10)
-                            Debug.Log("ItemID: " + split[1] + " moved to " + split[2] + ", " + split[3]);
+                            //Debug.Log("ItemID: " + split[1] + " moved to " + split[2] + ", " + split[3]);
                             itemhandler.MoveItemStatus(int.Parse(split[1]), int.Parse(split[2]), int.Parse(split[3]));
                             break;
                         case 11: //serverStatus (ServerName, PlayerID, PlayerName)

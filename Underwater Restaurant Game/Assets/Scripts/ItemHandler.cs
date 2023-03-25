@@ -57,8 +57,8 @@ public class Item : MonoBehaviour
     public int posX;
     public int posY;
     public int itemState;
-    public static Object prefab;
-    public GameObject instance;
+    public static Object prefab = Resources.Load("Cola");
+    public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
     public Transform transform;
     public Networking networking = GameObject.Find("Networking").GetComponent<Networking>();
 
@@ -71,9 +71,11 @@ public class Item : MonoBehaviour
     }
 
     public void MoveItemStatus(int posX, int posY){
+        Debug.Log("ItemID: " + itemID + " moved to " + posX + ", " + posY);
         this.posX = posX;
         this.posY = posY;
-        transform.position.Set(posX, posY, 0);
+        //transform.position.Set(posX, posY, 0);
+        instance.transform.position = new Vector3(posX, posY, -9);
     }
     public void MoveItem(int posX, int posY){
         networking.sendMessage(2, itemID.ToString() + "," + (posX*10).ToString() + "," + (posY*10).ToString());
@@ -85,7 +87,7 @@ public class Item : MonoBehaviour
 public class Cola : Item //ItemID 0
 {
     public static Object prefab = Resources.Load("Cola");
-    public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
+    //public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
     bool opened = false;
 
 
