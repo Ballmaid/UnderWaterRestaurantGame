@@ -105,13 +105,15 @@ def sendCommand(command, addr):
 def sendUDP(command, addr):
     s.sendto(command.encode("utf-8"), addr)
 
-def createItem(ItemType, State):
+def createItem(ItemType, posX, posY, State):
     ItemID = 0
     for i in range(0, 10000):
         if not any(item.id == i for item in itemslist):
             ItemID = i
             break
-    itemslist.append(Item(ItemID, ItemType, State))
+    match ItemType:
+        case "0":
+            itemslist.append(Cola(ItemID, posX, posY, State)) 
     for clientplayer in playerlist:
         sendCommand("20," + ItemID + "," + ItemType + "," + State, clientplayer.addr)
 
@@ -199,8 +201,8 @@ class Item:
 
 class Cola(Item): #ID 0
     opened = False
-    def __init__(self, pos):
-        super().__init__(pos)
+    def __init__(self, posX, posY):
+        super().__init__(posX, posY, "0000000000000000")
     def open(self):
         self.opened = True
         self.state = "0000000000000001"
@@ -213,7 +215,7 @@ class SnackStation:
     def __init__(self, posX):
         self.posX = posX
     def takeCola(self):
-        createItem(0, "0000000000000000")
+        createItem("0", self.posX, 50, "0000000000000000")
         moveItem(itemslist[-1].id, self.posX+10, 50)
         
 
