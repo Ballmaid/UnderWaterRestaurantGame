@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4716618925147294423}
   - component: {fileID: 5736981602365757466}
+  - component: {fileID: 1259150659422108643}
+  - component: {fileID: -2156515605639918711}
   m_Layer: 0
   m_Name: Cola
   m_TagString: Untagged
@@ -84,3 +86,31 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1259150659422108643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301653461754160130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b5d1abaf0d111643b7d1100e1a27c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networking: {fileID: 0}
+  selfItem: {fileID: 0}
+  ItemID: 0
+--- !u!65 &-2156515605639918711
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301653461754160130}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.4099998, y: 4.3199997, z: 0.19999999}
+  m_Center: {x: 0, y: 0, z: 0}

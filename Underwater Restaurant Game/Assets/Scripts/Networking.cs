@@ -24,7 +24,7 @@ public class Networking : MonoBehaviour
     bool receivingnow = false;
     public UdpConnection connection;
     public string buffer = "C";
-    ItemHandler itemhandler;
+    public ItemHandler itemhandler;
 
     
 

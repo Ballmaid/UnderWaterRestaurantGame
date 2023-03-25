@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemHandler : MonoBehaviour
 {
     public List<Item> items = new List<Item>();
-
+    public Networking networking;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,34 +60,40 @@ public class Item : MonoBehaviour
     public static Object prefab;
     public GameObject instance;
     public Transform transform;
+    public Networking networking = GameObject.Find("Networking").GetComponent<Networking>();
 
     public Item(int itemID, int itemState){
         this.itemID = itemID;
         this.posX = 0;
         this.posY = 0;
         this.itemState = itemState;
+        //this.transform = instance.GetComponent<Transform>();
     }
 
     public void MoveItemStatus(int posX, int posY){
         this.posX = posX;
         this.posY = posY;
-        transform.position = new Vector3(posX, posY, 0);
+        transform.position.Set(posX, posY, 0);
     }
-
+    public void MoveItem(int posX, int posY){
+        networking.sendMessage(2, itemID.ToString() + "," + (posX*10).ToString() + "," + (posY*10).ToString());
+    }
 
 
 }
 
 public class Cola : Item //ItemID 0
 {
-    public static Object prefab = Resources.Load("Prefabs/Cola");
-    public GameObject instance = Instantiate(prefab, new Vector3(0, 0, 0), Quaternion.identity) as GameObject;
+    public static Object prefab = Resources.Load("Cola");
+    public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
     bool opened = false;
 
 
     public Cola(int itemID, int itemState) : base(itemID, itemState)
     {
-        transform = instance.GetComponent<Transform>();
+        instance.GetComponent<ItemBehavior>().ItemID = itemID;
+        instance.GetComponent<ItemBehavior>().selfItem = this;
+        this.transform = instance.GetComponent<Transform>();
     }
 
 }

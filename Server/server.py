@@ -139,6 +139,7 @@ def moveItem(ItemID, NewPosX, NewPosY):
             item.posX = NewPosX
             item.posY = NewPosY
             break
+    moveItemStatus(ItemID, NewPosX, NewPosY)
 
 def moveItemStatus(ItemID, NewPosX, NewPosY):
     for clientplayer in playerlist:

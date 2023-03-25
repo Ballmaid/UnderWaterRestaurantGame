@@ -243,6 +243,7 @@ MonoBehaviour:
   playerID: 0
   players: []
   buffer: C
+  itemhandler: {fileID: 1105474007}
 --- !u!1 &270333393
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,6 +1125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  networking: {fileID: 183728483}
 --- !u!1 &1371710607
 GameObject:
   m_ObjectHideFlags: 0
