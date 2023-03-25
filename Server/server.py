@@ -143,7 +143,7 @@ def moveItem(ItemID, NewPosX, NewPosY):
 
 def moveItemStatus(ItemID, NewPosX, NewPosY):
     for clientplayer in playerlist:
-        sendCommand("1," + ItemID + "," + NewPosX + "," + NewPosY, clientplayer.addr)
+        sendCommand("1," + str(ItemID) + "," + str(NewPosX) + "," + str(NewPosY), clientplayer.addr)
 
 class Player:
     UserName = ""
