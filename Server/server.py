@@ -187,9 +187,14 @@ class Item:
     posY = 0
     id = 0
     state = "0000000000000000"
-    def __init__(self, posX, posY):
+    def __init__(self, posX, posY, state):
         self.posX = posX
         self.posY = posY
+        self.state = state
+        for i in range(0, 10000):
+            if not any(item.id == i for item in itemslist):
+                self.id = i
+                break
 
 
 class Cola(Item): #ID 0
