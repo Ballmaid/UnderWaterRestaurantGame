@@ -113,7 +113,7 @@ def createItem(ItemType, posX, posY, State):
             break
     match ItemType:
         case "0":
-            itemslist.append(Cola(ItemID, posX, posY, State)) 
+            itemslist.append(Cola(posX, posY)) 
     for clientplayer in playerlist:
         sendCommand("20," + ItemID + "," + ItemType + "," + State, clientplayer.addr)
 
