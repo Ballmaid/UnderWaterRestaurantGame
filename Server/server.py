@@ -217,7 +217,7 @@ class SnackStation:
         self.posX = posX
     def takeCola(self):
         createItem("0", self.posX, 0, "0000000000000000")
-        moveItem(itemslist[-1].id, self.posX+10, 50)
+        moveItem(itemslist[-1].id, self.posX+0, 0)
         
 
 
