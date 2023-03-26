@@ -19,7 +19,7 @@ public class ItemHandler : MonoBehaviour
     }
 
 
-    public void MoveItemStatus(int itemID, int posX, int posY){
+    public void MoveItemStatus(int itemID, float posX, float posY){
         foreach(Item item in items){
             if(item.itemID == itemID){
                 item.MoveItemStatus(posX, posY);
@@ -54,8 +54,8 @@ public class ItemHandler : MonoBehaviour
 public class Item : MonoBehaviour
 {
     public int itemID;
-    public int posX;
-    public int posY;
+    public float posX;
+    public float posY;
     public int itemState;
     public static Object prefab = Resources.Load("Cola");
     public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
@@ -64,21 +64,21 @@ public class Item : MonoBehaviour
 
     public Item(int itemID, int itemState){
         this.itemID = itemID;
-        this.posX = 0;
-        this.posY = 0;
+        this.posX = 0f;
+        this.posY = 0f;
         this.itemState = itemState;
         //this.transform = instance.GetComponent<Transform>();
     }
 
-    public void MoveItemStatus(int posX, int posY){
+    public void MoveItemStatus(float posX, float posY){
         Debug.Log("ItemID: " + itemID + " moved to " + posX + ", " + posY);
         this.posX = posX;
         this.posY = posY;
         //transform.position.Set(posX, posY, 0);
         instance.transform.position = new Vector3(posX, posY, -9);
     }
-    public void MoveItem(int posX, int posY){
-        networking.sendMessage(2, itemID.ToString() + "," + (posX*10).ToString() + "," + (posY*10).ToString());
+    public void MoveItem(float posX, float posY){
+        networking.sendMessage(2, itemID.ToString() + "," + ((int)(posX*10)).ToString() + "," +  ((int)(posY*10)).ToString());
     }
 
 

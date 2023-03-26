@@ -39,10 +39,10 @@ public class ItemBehavior : MonoBehaviour
     }
     void OnMouseUp(){
         isDragging = false;
-        MoveItem((int)transform.position.x, (int)transform.position.y);
+        MoveItem((float)transform.position.x, (float)transform.position.y);
     }
-    public void MoveItem(int posX, int posY){
-        networking.sendMessage(2, ItemID.ToString() + "," + (posX*1).ToString() + "," + (posY*1).ToString());
+    public void MoveItem(float posX, float posY){
+        networking.sendMessage(2, ItemID.ToString() + "," + ((int)(posX*10)).ToString() + "," +  ((int)(posY*10)).ToString());
         //Debug.Log("ItemID: " + ItemID + " moved to " + posX + ", " + posY);
     }
 }

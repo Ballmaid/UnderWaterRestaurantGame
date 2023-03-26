@@ -136,8 +136,8 @@ def changeItemState(ItemID, NewState):
 def moveItem(ItemID, NewPosX, NewPosY):
     for item in itemslist:
         if item.id == int(ItemID):
-            item.posX = NewPosX
-            item.posY = NewPosY
+            item.posX = int(NewPosX)
+            item.posY = int(NewPosY)
             break
     moveItemStatus(ItemID, NewPosX, NewPosY)
 
