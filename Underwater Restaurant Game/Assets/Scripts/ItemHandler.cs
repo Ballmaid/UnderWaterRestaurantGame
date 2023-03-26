@@ -61,6 +61,7 @@ public class Item : MonoBehaviour
     public GameObject instance = Instantiate(prefab, new Vector3(0, 0, -9), Quaternion.identity) as GameObject;
     public Transform transform;
     public Networking networking = GameObject.Find("Networking").GetComponent<Networking>();
+    public ItemBehavior ItemBehavior;// = instance.GetComponent<ItemBehavior>();
 
     public Item(int itemID, int itemState){
         this.itemID = itemID;
@@ -68,14 +69,23 @@ public class Item : MonoBehaviour
         this.posY = 0f;
         this.itemState = itemState;
         //this.transform = instance.GetComponent<Transform>();
+        this.ItemBehavior = instance.GetComponent<ItemBehavior>();
     }
 
     public void MoveItemStatus(float posX, float posY){
-        Debug.Log("ItemID: " + itemID + " moved to " + posX + ", " + posY);
-        this.posX = posX;
-        this.posY = posY;
+        //Debug.Log("ItemID: " + itemID + " moved to " + posX + ", " + posY);
+        
         //transform.position.Set(posX, posY, 0);
-        instance.transform.position = new Vector3(posX, posY, -9);
+        if(ItemBehavior.isDragging == false){
+            instance.transform.position = new Vector3(posX, posY, -9);
+            this.posX = posX;
+            this.posY = posY;
+            Debug.Log("Accepting itemmove");
+        }
+        else{
+            Debug.Log("Rejecting itemmove");
+        }
+
     }
     public void MoveItem(float posX, float posY){
         networking.sendMessage(2, itemID.ToString() + "," + ((int)(posX*10)).ToString() + "," +  ((int)(posY*10)).ToString());

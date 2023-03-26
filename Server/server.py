@@ -25,7 +25,7 @@ def setupNetwork():
     print("Server is listening on port 1008")
 
 def listenCommand():
-    data, addr = s.recvfrom(1024)
+    data, addr = s.recvfrom(8192)
     stringdata = data.decode("utf-8")
     #stringdata is in format "msgtype,var1,var2,var3..." 
     #msgtype 

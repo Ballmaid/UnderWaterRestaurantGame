@@ -7,7 +7,7 @@ public class ItemBehavior : MonoBehaviour
     public Networking networking;
     public Item selfItem;
     Vector3 startMousePosition;
-    bool isDragging = false;
+    public bool isDragging = false;
     public int ItemID = 0;
     
     // Start is called before the first frame update
@@ -31,6 +31,7 @@ public class ItemBehavior : MonoBehaviour
             mouseDelta.y = mouseDelta.y / Screen.height * 10;
             transform.position += mouseDelta;
             startMousePosition = mousePosition;
+            MoveItem((float)transform.position.x, (float)transform.position.y);
         }
     }
     void OnMouseDown(){
