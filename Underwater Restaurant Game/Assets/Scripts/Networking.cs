@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
     public string id;
     public string username;
     public int posX = 0;
-    public GameObject playerObject = Instantiate(playerprefab, new Vector3(0, 0, -1), Quaternion.identity) as GameObject;
+    public GameObject playerObject = Instantiate(playerprefab, new Vector3(0, -4.22f, -1), Quaternion.identity) as GameObject;
     public TextMeshProUGUI playerText;
     public void alive(){
         playerText = playerObject.GetComponentInChildren<TextMeshProUGUI>();
@@ -178,6 +178,6 @@ public class Player : MonoBehaviour
     }
     public void move()
     {
-        playerObject.transform.position = new Vector3(posX, 0, -1);
+        playerObject.transform.position = new Vector3(posX*0.1f, -4.22f, -1);
     }
 }

@@ -17,7 +17,7 @@ public class CameraMovement : MonoBehaviour
     }
 
     void NetworkMovement() {
-        network.sendMessage(0, network.playerID + "," + ((int)CameraTransform.position.x).ToString() );
+        network.sendMessage(0, network.playerID + "," + ((int)(CameraTransform.position.x*10)).ToString() );
         network.flushBuffer();
     }
 
