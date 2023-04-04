@@ -212,15 +212,51 @@ class Cola(Item): #ID 0
 #======Stations======
 
 class SnackStation:
-    posX = 0
+    posX = 21
     def __init__(self, posX):
         self.posX = posX
     def takeCola(self):
         createItem("0", self.posX, 0, "0000000000000000")
         moveItem(itemslist[-1].id, self.posX+0, 0)
         
+class counterStation:
+    posX = 0
+    customerarray = []
+    def __init__(self, posX):
+        self.posX = posX
+        self.customerarray.append(customer("Joe Biden"))
 
+class customer:
+    name = ""
+    orderarray = []
+    def __init__(self, name):
+        self.name = name
+        self.orderarray.append(menuItem("Cola", 0))
+    def giveItem(self, item):
+        for i in self.orderarray:
+            if i.itemID == item.itemID and i.readyItemState == item.readyItemState:
+                self.orderarray.remove(i)
+                destroyItem(item.id)
+                self.isFinished()
+                return True
+        return False
+    def isFinished(self):
+        if len(self.orderarray) == 0:
+            
+            return True
+        else:
+            return False
 
+class menuItem:
+    name = ""
+    itemID = -1
+    readyItemState = ""
+    def __init__(self, name, itemID):
+        self.itemID = itemID
+        match itemID:
+            case 0:
+                self.name = "Cola"
+                self.readyItemState = "0000000000000001"
 
 
 print("the server is starting")
