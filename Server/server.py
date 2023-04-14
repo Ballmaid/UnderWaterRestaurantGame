@@ -22,7 +22,7 @@ def setupNetwork():
     global s
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(("0.0.0.0", 1008))
-    print("Server is listening on port 1008")
+    print("Server is listening on port 1008") 
 
 def listenCommand():
     data, addr = s.recvfrom(16384)
