@@ -80,10 +80,10 @@ public class Item : MonoBehaviour
             instance.transform.position = new Vector3(posX, posY, -9);
             this.posX = posX;
             this.posY = posY;
-            Debug.Log("Accepting itemmove");
+            
         }
         else{
-            Debug.Log("Rejecting itemmove");
+            
         }
 
     }
