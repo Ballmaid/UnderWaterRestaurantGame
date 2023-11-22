@@ -1,0 +1,23 @@
+@startuml
+class Network{
+    receiveBuffer: Queue
+    sendBuffer: Queue
+
+}
+class Message{
+
+}
+Network ..> Message : Queues
+Player --> Network : updatePosition(id,pos) ODER addMessage(5,3,105)
+
+abstract class Item
+class Cola extends Item
+
+class Player
+
+abstract class Station
+class SnackStation
+
+class Counter
+
+@enduml
