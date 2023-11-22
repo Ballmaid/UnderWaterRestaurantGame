@@ -178,6 +178,6 @@ public class Player : MonoBehaviour
     }
     public void move()
     {
-        playerObject.transform.position = new Vector3(posX*0.1f, -4.22f, -1);
+        playerObject.transform.position = new Vector3(posX*0.1f, -3.75f, -1);
     }
 }
