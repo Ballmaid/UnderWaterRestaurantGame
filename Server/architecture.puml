@@ -1,28 +1,69 @@
 @startuml
-
+!theme vibrant
 
 class BufferReceiver{
-    inbox: Message[]
-    get(): Message
+    + inbox: Message[]
+    + get(): Message
 }
 
 class BufferSender{
-    outbox: Message[]
-    put(): Message
+    + outbox: Message[]
+    + put(): Message
 }
+Player "1" --> "1" BufferSender
 
 abstract class Message{
-
+    + run(Player[], Item[]): void
 }
 
-abstract class Item
+class Controller << Singleton >>{
+    playerlist: Player[]
+    itemlist: Item[]
+    containerlist: Container[]
+    stationlist: Station[]
+    counter: Counter
+}
+Controller "1" --> "n" Player
+Controller "1" -l-> "n" Item
+Controller "1" -l-> "n" Container
+Controller "1" -r-> "n" Station
+Controller "1" -l-> "1" Ordering.Counter
+Controller ..> Message: run()
+class Distributor{
+    + sendAll(Player[]): void
+    + sendOne(Player[], Player): void
+    + sendExcept(Player[], Player): void
+}
+Controller ..> BufferReceiver: get()
+Controller ..> Distributor: sendX(Player?)
+Distributor ..> Player
+abstract class Item{
+    + move(int, int): void
+}
+abstract class Container{
+    - items: Item[]
+}
 class Cola extends Item
+class Burger extends Container
 
-class Player
+class Player{
+    - b_s: BufferSender
+}
 
 abstract class Station
-class SnackStation
-
-class Counter
+class SnackStation extends Station
+package "Ordering"{
+    class Counter << Singleton >>{
+        - customers: Customer[]
+    }
+    class Customer{
+        - name: String
+        - hair: int
+        - skinColor: bool
+        - itemOrder: Item[]
+        - containerOrder: Container[]
+    }
+    Counter "1" -r-> "n" Customer
+}
 
 @enduml
