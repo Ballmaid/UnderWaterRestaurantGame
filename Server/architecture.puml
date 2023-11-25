@@ -42,6 +42,7 @@ abstract class Item{
 }
 abstract class Container{
     - items: Item[]
+    + addItem(Item): void
 }
 class Cola extends Item
 class Burger extends Container
