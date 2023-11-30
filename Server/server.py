@@ -50,4 +50,4 @@ controller = Controller()
 threadkill = threading.Thread(target=qkill, daemon=True).start()
 print("Type exit to close the server")
 while keep_running:
-    time.sleep(1)
+    threading.wait(1)
