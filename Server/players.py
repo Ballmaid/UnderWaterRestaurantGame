@@ -43,7 +43,7 @@ class BufferSender:
             print("Sending " + messageString + " to " + str(self.addr))
             self.s.sendto(messageString.encode("utf-8"), self.addr)
             messageString = ""
-            time.sleep(1/60)
+            threading.wait(1/20)
 
 
     def put(self, message):
