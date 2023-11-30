@@ -27,6 +27,8 @@ class Controller:
         while True:
             if not b_r.isEmpty():
                 b_r.get().run(self.playerlist, self.itemlist, self.containerlist, self.stationlist, self.counter, self.distributor)
+            else:
+                threading.wait(1/20)
         
             
 
