@@ -29,6 +29,7 @@ class BufferReceiver:
                         case 10:
                             self.inbox.append(ConnectPlayerMessage(splitmessage[1:] + [addr]))
                         case 12:
+                            print("Got disconnect message" + str(splitmessage))
                             self.inbox.append(DisconnectPlayerMessage(splitmessage[1:]))
                         case 101:
                             self.inbox.append(TakeColaMessage(splitmessage[1:]))

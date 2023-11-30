@@ -44,8 +44,7 @@ class ConnectPlayerMessage(Message):
 
 class DisconnectPlayerMessage(Message):
     def __init__(self, var: list[str]):
-        self.playerid = int(var[0])
-        
+        self.playerid = int(var[0])        
 
 
 class TakeColaMessage(Message):
