@@ -2,6 +2,7 @@ from bufferreceiver import *
 from containitems import *
 from counter import *
 from players import *
+from distributor import *
 import threading
 import time
 
@@ -12,18 +13,20 @@ class Controller:
     containerlist = []
     stationlist = []
     counter = Counter()
+    distributor = None
     def __init__(self):
         self.playerlist = []
         self.itemlist = []
         self.containerlist = []
         self.stationlist = []
         self.counter = Counter()
+        self.distributor = Distributor(self)
         threading.Thread(target=self.work, daemon=True).start()
     
     def work(self):
         while True:
             if not b_r.isEmpty():
-                b_r.get().run(self.playerlist, self.itemlist, self.containerlist, self.stationlist, self.counter)
+                b_r.get().run(self.playerlist, self.itemlist, self.containerlist, self.stationlist, self.counter, self.distributor)
         
             
 

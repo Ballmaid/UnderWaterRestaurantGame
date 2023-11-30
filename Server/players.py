@@ -18,6 +18,8 @@ class Player:
                 break
         print("Added player " + UserName + " with id " + str(self.id))
         self.b_s = BufferSender(addr)
+    def getBufferSender(self):
+        return self.b_s
         
 
 class BufferSender:
@@ -32,14 +34,18 @@ class BufferSender:
         while True:
             messageString = "S"
             while len(messageString) < 16384:
-                if messageString != "S":
-                    messageString += ";"
-                if(len(self.outbox) == 0):
+                if(len(self.outbox) == 0 and messageString != "S"):
                     break
-                messageString += self.outbox.pop(0).getString()
+                if(len(self.outbox) != 0):
+                    if(messageString != "S"):
+                        messageString += ";"    
+                    messageString += self.outbox.pop(0).getString()
+            print("Sending " + messageString + " to " + str(self.addr))
             self.s.sendto(messageString.encode("utf-8"), self.addr)
+            messageString = ""
             time.sleep(1/60)
 
 
     def put(self, message):
+        print("Putting " + message.getString() + " in outbox")
         self.outbox.append(message)

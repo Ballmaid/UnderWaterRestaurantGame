@@ -22,6 +22,7 @@ class Controller << Singleton >>{
     containerlist: Container[]
     stationlist: Station[]
     counter: Counter
+    distributor: Distributor
 }
 Controller "1" --> "n" Player
 Controller "1" -l-> "n" Item
@@ -30,9 +31,10 @@ Controller "1" -r-> "n" Station
 Controller "1" -l-> "1" Ordering.Counter
 Controller ..> Message: run()
 class Distributor{
-    + sendAll(Player[]): void
-    + sendOne(Player[], Player): void
-    + sendExcept(Player[], Player): void
+    - playerlist: Player[]
+    + sendAll(Message): void
+    + sendOne(Message, Player): void
+    + sendExcept(Message, Player): void
 }
 Controller ..> BufferReceiver: get()
 Controller ..> Distributor: sendX(Player?)
