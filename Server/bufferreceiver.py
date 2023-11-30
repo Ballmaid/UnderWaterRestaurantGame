@@ -17,7 +17,6 @@ class BufferReceiver:
             data, addr = self.s.recvfrom(16384)
             stringdata = data.decode("utf-8")
             if(stringdata[0] == "C"):
-                print("Received " + stringdata + " from " + str(addr))
                 stringdata = stringdata[1:]
                 messagelist = stringdata.split(";")
                 for message in messagelist:
